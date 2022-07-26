@@ -1,6 +1,6 @@
-# web-browser-electron
+# wallpaper-electron
 
-> An electron-vue project
+> 一个简易动态壁纸软件
 
 #### Build Setup
 
