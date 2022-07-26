@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        html,body {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <canvas ref="canvas"></canvas>
+</body>
+<script>
+  function rain(canvass, text, symbols, speeds) {
+    // 获取屏幕可视区域大小
+    const d = document.documentElement;
+    const clinetW = d.clientWidth;
+    const clinetH = d.clientHeight;
+
+    // 设置画布大小
+    const canvas = canvass || document.querySelector('canvas');
+    canvas.width = clinetW;
+    canvas.height = clinetH;
+
+    const cxt = canvas.getContext('2d');
+    const rainStr = text || 'The matrix of hackers';
+    const symbol = symbols || '';
+    const arr = rainStr.split(symbol);
+
+    const fontSize = 14;
+    // 计算行数
+    const cols = Math.floor(clinetW / fontSize);
+    // 初始化Y轴坐标
+    const down = [];
+    for (let i = 0; i < cols; i++) {
+      down.push(Math.floor(Math.random() * -100));
+    }
+
+    function drawRain() {
+      // 填充背景(ps:背景采用rgba,可尝试不同透明度的效果)
+      cxt.fillStyle = 'rgba(0,0,0,.1)';
+      cxt.fillRect(0, 0, clinetW, clinetH);
+
+      // 设置字体颜色
+      cxt.fillStyle = '#00ff00';
+      for (let i = 0; i < down.length; i++) {
+        const randomNum = Math.random();
+        // 绘制文字
+        cxt.fillText(arr[Math.floor(randomNum * arr.length)], i * fontSize, down[i] * fontSize);
+
+        if (down[i] * fontSize > clinetH && randomNum > 0.9) {
+          down[i] = 0;
+        }
+
+        down[i]++;
+      }
+    }
+    // eslint-disable-next-line no-redeclare
+    const speed = speeds || 30;
+    setInterval(drawRain, speed);
+  }
+  window.onload = () => {
+    const canvas = document.querySelector('canvas');
+    const text = '0 1 2 3 4 5 6 7 8 9';
+    this.rain(canvas, text, '', 30);
+  }
+</script>
+</html>
