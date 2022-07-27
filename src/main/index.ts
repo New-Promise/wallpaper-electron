@@ -1,5 +1,5 @@
 'use strict';
-import { app, BrowserWindow, Menu, globalShortcut, Tray, protocol } from 'electron';
+import { app, BrowserWindow, Menu, Tray, protocol } from 'electron';
 import { WallpaperWindow } from './wallpaperWindow';
 import { GetWallpaperFile } from './getWallpaperFile'
 import { Tools } from './tools'
@@ -36,8 +36,10 @@ function createWindow () {
     // show: false, // 创建时是否应显示窗口。默认为 true。
     width: 1200, // 窗口的宽度（以像素为单位）。默认为800。
     height: 800, //  窗口的高度（以像素为单位）。默认为600
+    // x: 1900,
+    // y: 0,
     useContentSize: false, // width和height将用作网页的大小，这意味着实际窗口的大小将包括窗口框架的大小并稍大。默认为false。
-    center: true, // 在屏幕中央显示窗口。
+    // center: true, // 在屏幕中央显示窗口。
     resizable: false, // 窗口大小是否可改变
     maximizable: true, // 窗口是否可以最大化
     frame: false, // 是否显示顶部导航栏
@@ -57,7 +59,7 @@ function createWindow () {
   // 获取壁纸文件
   new GetWallpaperFile();
   // 一些工具
-  new Tools(mainWindow, wallpaperWindow.wallpaperWindow);
+  new Tools(mainWindow);
   // 获取文件JSON数据
   new SetJsonFile(mainWindow, wallpaperWindow.wallpaperWindow);
   // 设置系统托盘
@@ -84,10 +86,9 @@ function createWindow () {
   mainWindow.on('closed', () => {
     mainWindow = null
   });
-  globalShortcut.register('Ctrl+F12', () => { // 打开主程序开发者工具
-    mainWindow.openDevTools();
-    wallpaperWindow.wallpaperWindow.openDevTools();
-  });
+  // globalShortcut.register('Ctrl+F12', () => { // 打开主程序开发者工具
+  //   mainWindow.openDevTools();
+  // });
 }
 app.commandLine.appendSwitch('ignore-certificate-errors');
 function init () {
@@ -106,7 +107,8 @@ app.on('activate', () => {
     createWindow()
   }
 });
-// app.on('before-quit', () => {
-//   wallpaperWindow.close();
-//   mainWindow.close();
+//设置开机启动
+// app.setLoginItemSettings({
+//   openAtLogin: true
 // });
+

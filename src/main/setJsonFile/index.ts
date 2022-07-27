@@ -35,7 +35,9 @@ export class SetJsonFile {
         if (err) event.sender.send('setJsonFileSuccessError');
         else {
           this.mainWindow.webContents.send('setJsonFileSuccess', jsonData);
-          this.wallpaperWindow.webContents.send('getAtWallpaper', jsonData.atWallpaper);
+          this.wallpaperWindow.forEach((item: any) => {
+            item.webContents.send('getAtWallpaper', jsonData.atWallpaper);
+          })
         }
       })
     })
@@ -45,7 +47,9 @@ export class SetJsonFile {
     ipcMain.on('getJsonFile', (event) => {
       this.readJsonFile().then((jsonData: any) => {
         this.mainWindow.webContents.send('getJsonFileSuccess', jsonData);
-        this.wallpaperWindow.webContents.send('getAtWallpaper', jsonData.atWallpaper);
+        this.wallpaperWindow.forEach((item: any) => {
+          item.webContents.send('getAtWallpaper', jsonData.atWallpaper);
+        })
       }).catch((err) => {
         event.sender.send('getJsonFileError', err)
       })

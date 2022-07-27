@@ -1,10 +1,8 @@
 import {ipcMain} from 'electron'
 export class Tools {
   mainWin: any = null;
-  wallpaperWindow: any = null;
-  constructor (mainWin: any, wallpaperWindow: any) {
+  constructor (mainWin: any) {
     this.mainWin = mainWin;
-    this.wallpaperWindow = wallpaperWindow;
     this.minimize();
     this.maximize();
     this.unmaximize();

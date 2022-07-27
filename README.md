@@ -1,6 +1,6 @@
 # wallpaper-electron
 
-> 一个简易动态壁纸软件
+> An electron-vue project
 
 #### Build Setup
 
