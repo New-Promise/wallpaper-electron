@@ -108,7 +108,7 @@ app.on('activate', () => {
   }
 });
 //设置开机启动
-// app.setLoginItemSettings({
-//   openAtLogin: true
-// });
+app.setLoginItemSettings({
+  openAtLogin: true
+});
 

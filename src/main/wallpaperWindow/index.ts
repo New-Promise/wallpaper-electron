@@ -25,13 +25,18 @@ export class WallpaperWindow {
   getScreen () {
     const screenCount = screen.getAllDisplays();
     console.log('screenCount', screenCount);
+    let y = 0;
     screenCount.forEach((item: { workArea: Rectangle }) => {
-      this.creationWindows(item.workArea)
+      if (item.workArea.y < 0) y = Math.abs(item.workArea.y)
+    })
+    screenCount.forEach((item: { workArea: Rectangle }) => {
+      this.creationWindows(item.workArea, y)
     })
   }
 
-  creationWindows (params: Rectangle) {
-    const { x, y, width, height } = params;
+  creationWindows (params: Rectangle, y: number) {
+    const { x, width, height } = params;
+    let YLine = params.y < 0 ? 0 : y;
     const wallpaperConfig: object = {
       // type: 'toolbar',
       title: '动态壁纸',
@@ -40,7 +45,7 @@ export class WallpaperWindow {
       width, // 窗口的宽度（以像素为单位）。默认为800。
       height, //  窗口的高度（以像素为单位）。默认为600
       x,
-      y,
+      y: YLine,
       useContentSize: false, // width和height将用作网页的大小，这意味着实际窗口的大小将包括窗口框架的大小并稍大。默认为false。
       // center: true, // 在屏幕中央显示窗口。
       resizable: false, // 窗口大小是否可改变

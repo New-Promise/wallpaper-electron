@@ -17,6 +17,6 @@ export declare class WallpaperWindow {
     winURL: string;
     constructor(winURL: string);
     getScreen(): void;
-    creationWindows(params: Rectangle): void;
+    creationWindows(params: Rectangle, y: number): void;
 }
 export {};

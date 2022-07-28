@@ -1,6 +1,17 @@
 # wallpaper-electron
 
-> An electron-vue project
+> 简易动态壁纸
+
+#### 简介
+
+``` bash
+# 只适用Windows系统,有兴趣可以的自行修改代码兼容macOs,linux
+
+# 项目内只有几个默认的壁纸, 其他的需要自己上传到应用内才可以设置为壁纸
+
+# 可适用html, MP4, git, png等类型文件作为壁纸
+
+```
 
 #### Build Setup
 
@@ -13,13 +24,6 @@ npm run dev
 
 # build electron application for production
 npm run build
-
-# run unit & end-to-end tests
-npm test
-
-
-# lint all JS/Vue component files in `src/`
-npm run lint
 
 ```
 
