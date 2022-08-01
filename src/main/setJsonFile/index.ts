@@ -20,6 +20,10 @@ export class SetJsonFile {
     this.getJsonFile();
   }
 
+  updateWallpaperWindow (params: Array<any>) { // 外部调用,更新壁纸窗口对象
+    this.wallpaperWindow = params
+  }
+
   readJsonFile () {
     return new Promise((resolve, reject) => {
       fs.readFile(wallpaperJsonPath, (err: Error, json: any ) => {

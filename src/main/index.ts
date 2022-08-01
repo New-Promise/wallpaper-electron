@@ -1,5 +1,5 @@
 'use strict';
-import { app, BrowserWindow, Menu, Tray, protocol } from 'electron';
+import { app, BrowserWindow, Menu, Tray, protocol, screen } from 'electron';
 import { WallpaperWindow } from './wallpaperWindow';
 import { GetWallpaperFile } from './getWallpaperFile'
 import { Tools } from './tools'
@@ -17,6 +17,7 @@ if (process.env.NODE_ENV !== 'development') {
 let mainWindow: any; // 主界面
 let wallpaperWindow: any; // 壁纸窗口
 let systemTray: any; // 系统托盘
+let setJsonFile: any; //
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`;
@@ -61,7 +62,7 @@ function createWindow () {
   // 一些工具
   new Tools(mainWindow);
   // 获取文件JSON数据
-  new SetJsonFile(mainWindow, wallpaperWindow.wallpaperWindow);
+  setJsonFile = new SetJsonFile(mainWindow, wallpaperWindow.wallpaperWindow);
   // 设置系统托盘
   systemTray = new Tray(trayImagePath);
   app.whenReady().then(() => {
@@ -86,11 +87,17 @@ function createWindow () {
   mainWindow.on('closed', () => {
     mainWindow = null
   });
+
+  screen.on('display-metrics-changed', () => {
+    wallpaperWindow.forEach((item: any) => item.close());
+    // 设置壁纸窗口
+    wallpaperWindow = new WallpaperWindow(winURL + '#/wallpaperPage');
+    setJsonFile.updateWallpaperWindow(wallpaperWindow.wallpaperWindow)
+  })
   // globalShortcut.register('Ctrl+F12', () => { // 打开主程序开发者工具
   //   mainWindow.openDevTools();
   // });
 }
-app.commandLine.appendSwitch('ignore-certificate-errors');
 function init () {
   if (app.isReady()) createWindow()
 }
