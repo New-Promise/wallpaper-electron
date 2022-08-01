@@ -16,7 +16,7 @@
       "node_modules/@types"
     ], /* List of folders to include type definitions from. */
     "types": [
-      // add node as an option
+      // add node as an option1
       "node"
     ], /* Type declaration files to be included in compilation. */
     "baseUrl": ".",
